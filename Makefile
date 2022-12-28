@@ -63,4 +63,19 @@ clean:
 	$(info $(RED_COL)DELETED $(BUILD_DIR)$(RESET_COL))
 
 fclean: clean
+	make fclean -C $(dir $(LIBFT))
+	$(RM) $(NAME)
+	$(info $(RED_COL)DELETED $(NAME)$(RESET_COL))
 
+re: fclean all
+
+print-%:
+	$(info '$*'='$($*)')
+
+info-%:
+	$(MAKE) --dry-run --always-make $* | grep -v "info"
+
+
+.PHONY: all clean fclean re gen_dir
+
+.SILENT:
