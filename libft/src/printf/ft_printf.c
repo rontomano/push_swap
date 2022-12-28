@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: drontome <drontome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/12 10:22:23 by drontome          #+#    #+#             */
-/*   Updated: 2022/12/28 16:50:24 by drontome         ###   ########.fr       */
+/*   Created: 2022/08/01 20:12:04 by drontome          #+#    #+#             */
+/*   Updated: 2022/12/07 18:48:57 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
+#include "libft.h"
 
-# define PUSH_SWAP_H
-
-# define RED "\033[0;91m"
-# define GREEN "\033[0;32m"
-# define CEND "\033[0;39m"
-# define EXIT_FAILURE 1
-# define FALSE 0
-# define TRUE 1
-
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <limits.h>
-# include "libft.h"
-
-
-typedef struct s_stack
+int	ft_printf(char const *s, ...)
 {
-	int	size;
-	t_list *top;
-}				t_stack;
+	va_list	ap;
+	int		char_printed;
 
-#endif
+	va_start(ap, s);
+	char_printed = 0;
+	while (*s)
+	{
+		if (*s == '%')
+		{
+			s++;
+			char_printed += ft_getformat(*s, ap);
+		}
+		else
+			char_printed += ft_putchar(*s);
+		s++;
+	}
+	va_end(ap);
+	return (char_printed);
+}

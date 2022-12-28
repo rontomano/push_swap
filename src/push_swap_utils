@@ -1,35 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   push_swap_utils                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
-/*   By: drontome <drontome@student.42madrid.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 11:11:25 by drontome          #+#    #+#             */
-/*   Updated: 2022/11/22 11:12:25 by drontome         ###   ########.fr       */
-=======
 /*   By: drontome <drontome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 10:23:34 by drontome          #+#    #+#             */
-/*   Updated: 2022/12/22 09:09:40 by drontome         ###   ########.fr       */
->>>>>>> master
+/*   Updated: 2022/12/22 11:19:49 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-<<<<<<< HEAD
-int	main(int argc, char **argv)
+void	ft_free_exit(t_stack st)
 {
-	
-=======
-int	main(int argc, char *argv[])
-{
-	t_stack	st_a;
-	t_stack st_b;
 
-	check_args(argc, argv, st_a);
-	return (0);
->>>>>>> master
+}
+
+char	*ft_atoi_swp(const char *str, t_stack *st_a)
+{
+	size_t	num;
+	int		neg;
+
+	num = 0;
+	neg = 1;
+	//a not necessary while
+	while (*str == 32 || (*str <= 13 && *str >= 9))
+		str++;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			neg *= -1;
+		str++;
+	}
+	if (!(*str >= 48 && *str <= 57))
+		return (0);
+	while (str && *str >= 48 && *str <= 57)
+	{
+		num = num * 10 + (*str - 48);
+		str++;
+	}
+	if (str && *str != NULL)
+		return (0);
+	if (num > INT_MAX && neg == 1)
+		return (-1);
+	else if (num > INT_MIN && neg == -1)
+		return (0);
+	return (num * neg);
 }

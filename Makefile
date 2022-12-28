@@ -1,73 +1,81 @@
-NAME = bin/push_swap
-
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3
+NAME := push_swap
 
 MAKEFLAGS += --no-print-directory
 
-SHELL=/bin/bash
-UNAME = $(shell uname -s)
+MK_DIR = mkdir -p $(@D)
+
+SHELL := /bin/bash
+UNAME := $(shell uname -s)
 
 
-LIBFTEXT = libftext/libftext.a
-LIBFTEXT_HEADER_DIR = libftext/include/
+LIBFT := libft/libft.a
 
+SRC_DIR := src/
+BUILD_DIR := .build/
 
-SRC_DIR = src/
-OBJ_DIR = obj/
-BIN_DIR = bin/
-HEADER_DIR = inc/
-LIBFTEXT_DIR = libftext/
-
-
-SRC = \
+SRC := \
 main.c \
 
 
-
-H_FILES = \
-push_swap.h \
+SRC := $(SRC:%=$(SRC_DIR)%)
 
 
-OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
+INC := \
+inc/ \
+libft/inc/
 
-HEADER = $(addprefix $(HEADER_DIR), $(H_FILES))
 
+OBJS := $(SRC:$(SRC_DIR)%.c=$(BUILD_DIR)%.o)
+
+DEPS := $(OBJS:.o=.d)
+
+CC = gcc
+
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+
+CPPFLAGS := $(addprefix -I, $(INC)) -MMD -MP
+
+RM = rm -rf
+
+RED_COL :=$(shell tput setaf 1)
+GREEN_COL :=$(shell tput setaf 2)
+RESET_COL :=$(shell tput sgr0)
 
 all: $(NAME)
 
 
-$(NAME): $(LIBFTEXT) $(OBJ)
-	@if [ ! -d "$(OBJ_DIR)" ] || [ ! -d "$(BIN_DIR)" ]; then \
-		make gen_dir; fi
-	@$(CC) $(OBJ) $(LIBFTEXT) -o $@
-	@echo "$(NAME) DONE"
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(LIBFT) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(info $(GREEN_COL)CREATED $(NAME)$(RESET_COL))
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADER)
-	@if [ ! -d "$(OBJ_DIR)" ] || [ ! -d "$(BIN_DIR)" ]; then \
-		make gen_dir; fi
-	@$(CC) $(CFLAGS) -I$(HEADER_DIR) -I$(LIBFTEXT_HEADER_DIR) -c $< -o $@
+$(BUILD_DIR)%.o: $(SRC_DIR)%.c
+	$(MK_DIR)
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
+$(LIBFT):
+	make -C $(dir $(LIBFT))
 
-$(LIBFTEXT):
-	@make -C $(LIBFTEXT_DIR)
-
-
-gen_dir:
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(BIN_DIR)
-	@echo "'$(BIN_DIR)' and $(OBJ_DIR) DONE"
+-include $(DEPS)
 
 clean:
-	@make clean -C $(LIBFTEXT_DIR)
-	@rm -rf $(OBJ_DIR)
-	@echo "'$(OBJ_DIR)' and .o REMOVE"
+	make clean -C $(dir $(LIBFT))
+	$(RM) $(BUILD_DIR)
+	$(info $(RED_COL)DELETED $(BUILD_DIR)$(RESET_COL))
 
 fclean: clean
-	@make fclean -C $(LIBFTEXT_DIR)
-	@rm -rf $(BIN_DIR)
-	@echo "'$(BIN_DIR)' and pipex REMOVE"
+	make fclean -C $(dir $(LIBFT))
+	$(RM) $(NAME)
+	$(info $(RED_COL)DELETED $(NAME)$(RESET_COL))
 
 re: fclean all
 
+print-%:
+	$(info '$*'='$($*)')
+
+info-%:
+	$(MAKE) --dry-run --always-make $* | grep -v "info"
+
+
 .PHONY: all clean fclean re gen_dir
+
+.SILENT:

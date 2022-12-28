@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
-/*   By: drontome <drontome@student.42madrid.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 11:11:25 by drontome          #+#    #+#             */
-/*   Updated: 2022/11/22 11:12:25 by drontome         ###   ########.fr       */
-=======
 /*   By: drontome <drontome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 10:23:34 by drontome          #+#    #+#             */
-/*   Updated: 2022/12/22 09:09:40 by drontome         ###   ########.fr       */
->>>>>>> master
+/*   Updated: 2022/12/22 11:21:28 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-<<<<<<< HEAD
-int	main(int argc, char **argv)
+void	check_args(int size, char **args, t_stack *st_a)
 {
-	
-=======
-int	main(int argc, char *argv[])
-{
-	t_stack	st_a;
-	t_stack st_b;
+	if (size < 1)
+		exit(EXIT_FAILURE);
+	while (args[i])
+		check_and_get(args[i], st_a);
 
-	check_args(argc, argv, st_a);
-	return (0);
->>>>>>> master
+}
+
+static void	check_and_get(char *arg, t_stack *st_a)
+{
+	char **sp_args;
+
+	sp_args = ft_split(arg, ' ');
+	if (sp_args == NULL)
+		ft_free_exit(st_a);
+	while (sp_args)
+	{
+		ft_atoi_in_swp(*sp_args, st_a);
+		sp_args
+	}
+
 }

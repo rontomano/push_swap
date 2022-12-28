@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: drontome <drontome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/12 10:22:23 by drontome          #+#    #+#             */
-/*   Updated: 2022/12/28 16:50:24 by drontome         ###   ########.fr       */
+/*   Created: 2022/06/18 20:30:14 by drontome          #+#    #+#             */
+/*   Updated: 2022/06/19 17:08:08 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
+#include "libft.h"
 
-# define PUSH_SWAP_H
-
-# define RED "\033[0;91m"
-# define GREEN "\033[0;32m"
-# define CEND "\033[0;39m"
-# define EXIT_FAILURE 1
-# define FALSE 0
-# define TRUE 1
-
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <limits.h>
-# include "libft.h"
-
-
-typedef struct s_stack
+char	*ft_strrchr(const char *s, int c)
 {
-	int	size;
-	t_list *top;
-}				t_stack;
+	char			*p;
+	unsigned int	len;
 
-#endif
+	len = ft_strlen(s);
+	p = (char *)(s + len);
+	while (len-- > 0 && *p != (char)c)
+		p--;
+	if (*p == (char)c)
+		return (p);
+	else
+		return (0);
+}

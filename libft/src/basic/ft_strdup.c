@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: drontome <drontome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/12 10:22:23 by drontome          #+#    #+#             */
-/*   Updated: 2022/12/28 16:50:24 by drontome         ###   ########.fr       */
+/*   Created: 2022/06/19 18:49:15 by drontome          #+#    #+#             */
+/*   Updated: 2022/06/19 20:48:55 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
+#include "libft.h"
 
-# define PUSH_SWAP_H
-
-# define RED "\033[0;91m"
-# define GREEN "\033[0;32m"
-# define CEND "\033[0;39m"
-# define EXIT_FAILURE 1
-# define FALSE 0
-# define TRUE 1
-
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <limits.h>
-# include "libft.h"
-
-
-typedef struct s_stack
+char	*ft_strdup(const char *s1)
 {
-	int	size;
-	t_list *top;
-}				t_stack;
+	char			*p;
+	unsigned int	i;
 
-#endif
+	p = ft_calloc(ft_strlen(s1) + 1, sizeof(char));
+	i = 0;
+	if (p == 0)
+		return (0);
+	while (*(s1 + i))
+	{
+		*(p + i) = *(s1 + i);
+		i++;
+	}
+	return (p);
+}

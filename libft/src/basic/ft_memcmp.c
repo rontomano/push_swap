@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: drontome <drontome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/12 10:22:23 by drontome          #+#    #+#             */
-/*   Updated: 2022/12/28 16:50:24 by drontome         ###   ########.fr       */
+/*   Created: 2022/06/19 16:47:42 by drontome          #+#    #+#             */
+/*   Updated: 2022/06/19 17:53:06 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
+#include "libft.h"
 
-# define PUSH_SWAP_H
-
-# define RED "\033[0;91m"
-# define GREEN "\033[0;32m"
-# define CEND "\033[0;39m"
-# define EXIT_FAILURE 1
-# define FALSE 0
-# define TRUE 1
-
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <limits.h>
-# include "libft.h"
-
-
-typedef struct s_stack
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int	size;
-	t_list *top;
-}				t_stack;
-
-#endif
+	if (n < 1)
+		return (0);
+	while (n-- > 0)
+	{
+		if (*(unsigned char *)s1 != *(unsigned char *)s2)
+			return (*(unsigned char *)s1 - *(unsigned char *)s2);
+		s1++;
+		s2++;
+	}
+	return (0);
+}

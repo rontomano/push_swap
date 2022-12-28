@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: drontome <drontome@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/12 10:22:23 by drontome          #+#    #+#             */
-/*   Updated: 2022/12/28 16:50:24 by drontome         ###   ########.fr       */
+/*   Created: 2022/06/17 14:18:21 by drontome          #+#    #+#             */
+/*   Updated: 2022/06/20 15:37:04 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
+#include "libft.h"
 
-# define PUSH_SWAP_H
-
-# define RED "\033[0;91m"
-# define GREEN "\033[0;32m"
-# define CEND "\033[0;39m"
-# define EXIT_FAILURE 1
-# define FALSE 0
-# define TRUE 1
-
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <limits.h>
-# include "libft.h"
-
-
-typedef struct s_stack
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	int	size;
-	t_list *top;
-}				t_stack;
-
-#endif
+	if (dst == src)
+		return (dst);
+	if (dst > src)
+	{
+		while (len-- > 0)
+			*((unsigned char *)dst + len) = *((unsigned char *)src + len);
+	}
+	else
+		ft_memcpy(dst, src, len);
+	return (dst);
+}
