@@ -15,6 +15,9 @@ BUILD_DIR := .build/
 
 SRC := \
 main.c \
+push_swap_utils.c \
+error.c \
+check_args.c
 
 
 SRC := $(SRC:%=$(SRC_DIR)%)
