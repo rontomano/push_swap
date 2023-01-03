@@ -17,7 +17,10 @@ SRC := \
 main.c \
 push_swap_utils.c \
 error.c \
-check_args.c
+check_args.c \
+moves.c	\
+push_swap.c \
+sort.c
 
 
 SRC := $(SRC:%=$(SRC_DIR)%)
@@ -34,7 +37,7 @@ DEPS := $(OBJS:.o=.d)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
 
 CPPFLAGS := $(addprefix -I, $(INC)) -MMD -MP
 
@@ -48,7 +51,7 @@ all: $(NAME)
 
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(LIBFT) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 	$(info $(GREEN_COL)CREATED $(NAME)$(RESET_COL))
 
 $(BUILD_DIR)%.o: $(SRC_DIR)%.c

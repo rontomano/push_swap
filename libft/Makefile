@@ -55,7 +55,10 @@ ft_strjoin_free.c		\
 ft_just_strchr.c		\
 ft_free_matrix.c		\
 ft_dup_matrix.c			\
-ft_len_matrix.c
+ft_len_matrix.c			\
+ft_isspace.c			\
+ft_lstswap.c			\
+ft_lstpenult.c
 
 GNL_SRC := \
 get_next_line.c \

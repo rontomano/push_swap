@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drontome <drontome@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drontome <drontome@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:26:38 by drontome          #+#    #+#             */
-/*   Updated: 2022/12/07 18:46:47 by drontome         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:44:02 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int		ft_tolower(int c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 void	*ft_memchr(const void *s, int c, size_t n);
-int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
@@ -106,4 +105,8 @@ int		ft_just_strchr(const char *chr, const char *str);
 void	*ft_free_matrix(char **mtx);
 char	**ft_dup_matrix(char **mtx);
 int		ft_len_matrix(char **matrix);
+int		ft_isspace(int c);
+void	ft_lstswap(t_list *a, t_list *b);
+t_list	*ft_lstpenult(t_list *lst);
+
 #endif

@@ -6,30 +6,22 @@
 /*   By: drontome <drontome@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 11:13:19 by drontome          #+#    #+#             */
-/*   Updated: 2022/11/22 12:06:42 by drontome         ###   ########.fr       */
+/*   Updated: 2023/01/01 12:49:45 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	parse(int argc char **argv)
+void	arg_error(t_stack *st_a)
 {
-	int x;
-	int y;
-	if argc < 3
-		ft_error();
-	x = 0;
-	while ((argv[x]))
-	{
-		y = x + 1;
-		while (argv[y])
-		{
-			if (!ft_strncmp(argv[x], argv[y], ft_strlen(argv[x]) == NULL))
-				ft_error;
-			y++;
-		}
+	ft_lstclear(&st_a->top, free);
+	ft_putstr_fd("Error\n", 2);
+	exit(EXIT_FAILURE);
+}
 
-			argv++;
-	}
-
+void	mem_error(t_stack *st_a)
+{
+	ft_lstclear(&st_a->top, free);
+	ft_putstr_fd("Error in malloc\n", 2);
+	exit(EXIT_FAILURE);
 }

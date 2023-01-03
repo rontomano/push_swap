@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drontome <drontome@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drontome <drontome@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 10:22:23 by drontome          #+#    #+#             */
-/*   Updated: 2022/12/28 16:50:24 by drontome         ###   ########.fr       */
+/*   Updated: 2023/01/03 19:25:40 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,26 @@ typedef struct s_stack
 	t_list *top;
 }				t_stack;
 
+typedef struct s_num
+{
+	int 	num;
+	size_t	ord;
+}				t_num;
+
+
+void	check_args(int size, char **args, t_stack *st_a);
+int		is_sorted(t_list *top);
+void	mov_swap(t_list **top, char c);
+void	mov_rev(t_list **top, char c);
+void	mov_rrev(t_list **top, char c);
+void	mov_push(t_list **out, t_list **in, char c);
+void	push_swap(t_stack *st_a, t_stack *st_b);
+t_num	get_max(t_list *top);
+t_num	get_min(t_list *top);
+void	arg_error(t_stack *st_a);
+void	mem_error(t_stack *st_a);
+void 	ft_printf_void(void *p);
+void	quick_sort(t_list **top);
+void	small_sort(t_list **top_a, t_list **top_b);
+int		get_right_pos(t_list *top);
 #endif
