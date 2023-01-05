@@ -20,7 +20,9 @@ error.c \
 check_args.c \
 moves.c	\
 push_swap.c \
-sort.c
+small_sort.c \
+big_sort.c	\
+get_moves.c
 
 
 SRC := $(SRC:%=$(SRC_DIR)%)
