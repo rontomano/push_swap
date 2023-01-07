@@ -6,7 +6,7 @@
 /*   By: drontome <drontome@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 17:44:37 by drontome          #+#    #+#             */
-/*   Updated: 2023/01/05 20:48:36 by drontome         ###   ########.fr       */
+/*   Updated: 2023/01/07 17:54:02 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_mov	get_moves_up(t_stack *st_a, t_stack *st_b, int range);
 static t_mov	get_moves_down(t_stack *st_a, t_stack *st_b, int range);
-static int	get_mov_b(t_stack *st_b, t_mov up);
+static void		get_mov_b(t_stack *st_b, t_mov *mov);
 
 
 int	get_moves(t_stack *st_a, t_stack *st_b, t_mov *movs, int range)
@@ -51,14 +51,15 @@ static t_mov	get_moves_up(t_stack *st_a, t_stack *st_b, int range)
 	{
 		if (*(int *)aux->content >= range && *(int *)aux->content < range + chunk)
 		{
-			up.num = *(int *)aux->content;
+			up.n_a = *(int *)aux->content;
 			break;
 		}
-		ft_printf_void(aux->content);
 		up.mov_a++;
 		aux = aux->next;
 	}
-	up.mov_b = get_mov_b(st_b, up);
+	get_mov_b(st_b, &up);
+	if (up.n_a < up.n_b && st_b->top != NULL)
+		up.mov_b++;
 	if (up.mov_a >= up.mov_b)
 		up.mov_tot = up.mov_a;
 	else if (up.mov_a < up.mov_b)
@@ -84,14 +85,21 @@ static t_mov	get_moves_down(t_stack *st_a, t_stack *st_b, int range)
 	{
 		if (*(int *)aux->content >= range && *(int *)aux->content < range + chunk)
 		{
-			down.num = *(int *)aux->content;
+			down.n_a = *(int *)aux->content;
 			down.mov_a = c;
 		}
 		c++;
 		aux = aux->next;
 	}
-	down.mov_a = st_a->size - down.mov_a;
-	down.mov_b = st_b->size - get_mov_b(st_b, down);
+	if (st_b->size < 99)
+		down.mov_a = st_a->size - st_b->size - down.mov_a;
+	get_mov_b(st_b, &down);
+	if (st_b->size > 1)
+	{
+		down.mov_b = st_b->size - down.mov_b;
+		if (down.n_a < down.n_b)
+			down.mov_b--;
+	}
 	if (down.mov_a >= down.mov_b)
 		down.mov_tot = down.mov_a;
 	else if (down.mov_a < down.mov_b)
@@ -99,28 +107,35 @@ static t_mov	get_moves_down(t_stack *st_a, t_stack *st_b, int range)
 	return(down);
 }
 
-static int	get_mov_b(t_stack *st_b, t_mov up)
+static void	get_mov_b(t_stack *st_b, t_mov *mov)
 {
 	t_list	*aux;
 	int		c;
 
 	aux = st_b->top;
-	if (!aux || aux->next == NULL)
-		return (0);
+	if (!aux)
+		return ;
 	c = 0;
 	while (TRUE)
 	{
 		aux = st_b->top;
-		up.mov_b = 0;
+		mov->mov_b = 0;
 		c++;
 		while(aux)
 		{
-			if (*(int *)aux->content == up.num - c)
-				return (up.mov_b);
-			else if (*(int *)aux->content == up.num + c)
-				return (up.mov_b + 1);
+
+			if (*(int *)aux->content == mov->n_a - c)
+			{
+				mov->n_b = *(int *)aux->content;
+				return ;
+			}
+			else if (*(int *)aux->content == mov->n_a + c)
+			{
+				mov->n_b = *(int *)aux->content;
+				return ;
+			}
 			aux = aux->next;
-			up.mov_b++;
+			mov->mov_b++;
 		}
 	}
 }

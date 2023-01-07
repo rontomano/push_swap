@@ -6,7 +6,7 @@
 /*   By: drontome <drontome@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/01 22:32:10 by drontome          #+#    #+#             */
-/*   Updated: 2023/01/05 20:18:25 by drontome         ###   ########.fr       */
+/*   Updated: 2023/01/07 18:12:59 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	mov_swap(t_list **top, char c)
 {
-	if (top)
+	if (*top && (*top)->next != NULL)
 	{
 		ft_lstswap(*top, (*top)->next);
 		if (c == 'a')
@@ -31,7 +31,7 @@ void	mov_rev(t_list **top, char c)
 {
 	t_list	*aux;
 
-	if (top)
+	if (*top && (*top)->next != NULL)
 	{
 		aux = *top;
 		*top = (*top)->next;
@@ -52,7 +52,7 @@ void	mov_rrev(t_list **top, char c)
 	t_list	*aux;
 	t_list	*new_last;
 
-	if (top)
+	if (*top && (*top)->next != NULL)
 	{
 		aux = ft_lstlast(*top);
 		new_last = ft_lstpenult(*top);

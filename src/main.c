@@ -6,7 +6,7 @@
 /*   By: drontome <drontome@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:01:43 by drontome          #+#    #+#             */
-/*   Updated: 2023/01/02 15:37:15 by drontome         ###   ########.fr       */
+/*   Updated: 2023/01/07 16:56:52 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,6 @@ int	main(int argc, char *argv[])
 	return (0);
 }
 /*
-	ft_printf("EL STACK A ES:\n");
-	ft_lstiter(st_a.top, ft_printf_void);
-	ft_printf("EL STACK B ES:\n");
-	ft_lstiter(st_b.top, ft_printf_void);
 //	ft_printf("EL TAMAÑO ES: %d\n", st_a.size);
 	while(st_a.top)
 		mov_push(&st_a.top, &st_b.top, 'b');

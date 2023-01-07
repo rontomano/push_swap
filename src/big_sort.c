@@ -6,7 +6,7 @@
 /*   By: drontome <drontome@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 11:39:44 by drontome          #+#    #+#             */
-/*   Updated: 2023/01/05 21:33:17 by drontome         ###   ########.fr       */
+/*   Updated: 2023/01/07 18:14:20 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void	big_sort(t_stack *st_a, t_stack *st_b)
 	if (last_is_top(&st_b->top, st_a->size))
 	{
 		while(st_b->top)
+		{
 			mov_push(&st_b->top, &st_a->top, 'a');
+			st_b->size--;
+		}
 	}
 }
 
@@ -58,7 +61,7 @@ static void	push_up(t_stack *st_a, t_stack *st_b, t_mov movs)
 			movs.mov_a--;
 			movs.mov_b--;
 		}
-		else if (movs.mov_a && *(int *)st_a->top->content != movs.num)
+		else if (movs.mov_a && *(int *)st_a->top->content != movs.n_a)
 		{
 			mov_rev(&st_a->top, 'a');
 			movs.mov_a--;
@@ -84,7 +87,7 @@ static void	push_down(t_stack *st_a, t_stack *st_b, t_mov movs)
 			movs.mov_a--;
 			movs.mov_b--;
 		}
-		else if (movs.mov_a && *(int *)st_a->top->content != movs.num)
+		else if (movs.mov_a && *(int *)st_a->top->content != movs.n_a)
 		{
 			mov_rrev(&st_a->top, 'a');
 			movs.mov_a--;
