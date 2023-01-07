@@ -6,7 +6,7 @@
 /*   By: drontome <drontome@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 17:44:37 by drontome          #+#    #+#             */
-/*   Updated: 2023/01/07 17:54:02 by drontome         ###   ########.fr       */
+/*   Updated: 2023/01/07 20:50:34 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static t_mov	get_moves_up(t_stack *st_a, t_stack *st_b, int range)
 		aux = aux->next;
 	}
 	get_mov_b(st_b, &up);
-	if (up.n_a < up.n_b && st_b->top != NULL)
+	if (up.n_a < up.n_b && st_b->top != NULL && st_b->top->next != NULL)
 		up.mov_b++;
 	if (up.mov_a >= up.mov_b)
 		up.mov_tot = up.mov_a;
@@ -91,7 +91,7 @@ static t_mov	get_moves_down(t_stack *st_a, t_stack *st_b, int range)
 		c++;
 		aux = aux->next;
 	}
-	if (st_b->size < 99)
+	if (st_b->size < st_a->size - 1)
 		down.mov_a = st_a->size - st_b->size - down.mov_a;
 	get_mov_b(st_b, &down);
 	if (st_b->size > 1)
@@ -113,8 +113,11 @@ static void	get_mov_b(t_stack *st_b, t_mov *mov)
 	int		c;
 
 	aux = st_b->top;
-	if (!aux)
+	if (!aux || aux->next == NULL)
+	{
+		mov->mov_b = 0;
 		return ;
+	}
 	c = 0;
 	while (TRUE)
 	{

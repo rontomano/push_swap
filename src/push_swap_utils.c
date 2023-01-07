@@ -137,19 +137,13 @@ static void	change_numbers(t_stack *st, int *ord)
 
 	i = 0;
 	aux = st->top;
-	while (st->size > i)
+	while(aux != NULL)
 	{
-		while(aux != NULL)
-		{
-			if (*(int *)aux->content == ord[i])
-			{
-				*(int *)aux->content = i;
-				break ;
-			}
-			aux = aux->next;
-		}
-		i++;
-		aux = st->top;
+		i = 0;
+		while (*(int *)aux->content != ord[i])
+			i++;
+		*(int *)aux->content = i;
+		aux = aux->next;
 	}
 	free(ord);
 	return;
