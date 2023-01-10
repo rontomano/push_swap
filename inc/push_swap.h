@@ -6,7 +6,7 @@
 /*   By: drontome <drontome@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 10:22:23 by drontome          #+#    #+#             */
-/*   Updated: 2023/01/07 20:43:20 by drontome         ###   ########.fr       */
+/*   Updated: 2023/01/10 11:46:43 by drontome         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,5 @@ void	small_sort(t_list **top_a, t_list **top_b);
 void	big_sort(t_stack *st_a, t_stack *st_b);
 void	rearrange(t_stack *st);
 int		get_right_pos(t_list *top);
-int		get_moves(t_stack *st_a, t_stack *st_b, t_mov *movs, int range);
+void	get_moves(t_stack *st_a, t_stack *st_b, t_mov *right_movs, int range);
 #endif

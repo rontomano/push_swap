@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+	/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   get_moves.c                                        :+:      :+:    :+:   */
@@ -12,99 +12,98 @@
 
 #include "push_swap.h"
 
-static t_mov	get_moves_up(t_stack *st_a, t_stack *st_b, int range);
-static t_mov	get_moves_down(t_stack *st_a, t_stack *st_b, int range);
+static t_mov	get_moves_first(t_stack *st_a, t_stack *st_b, int range);
+static t_mov	get_moves_last(t_stack *st_a, t_stack *st_b, int range);
 static void		get_mov_b(t_stack *st_b, t_mov *mov);
+static void		up_or_down(int size, t_mov *mov);
 
 
-int	get_moves(t_stack *st_a, t_stack *st_b, t_mov *movs, int range)
+void	get_moves(t_stack *st_a, t_stack *st_b, t_mov *right_movs, int range)
 {
-	t_mov	up;
-	t_mov	down;
+	t_mov	first;
+	t_mov	last;
 
-	up = get_moves_up(st_a, st_b, range);
-	down = get_moves_down(st_a, st_b, range);
-	if (up.mov_tot > down.mov_tot)
-	{
-		*movs = down;
-		return (FALSE);
-	}
+	first = get_moves_first(st_a, st_b, range);
+	last = get_moves_last(st_a, st_b, range);
+	if (first.mov_tot > last.mov_tot)
+		*right_movs = last;
 	else
-	{
-		*movs = up;
-		return (TRUE);
-	}
+		*right_movs = first;
+	return ;
 }
 
-static t_mov	get_moves_up(t_stack *st_a, t_stack *st_b, int range)
+static t_mov	get_moves_first(t_stack *st_a, t_stack *st_b, int range)
 {
-	int chunk;
-	t_mov	up;
+	int	chunk;
+	t_mov	first;
 	t_list	*aux;
 
 	chunk = st_a->size / CHUNK;
 	if (chunk < 10)
 		chunk = 10;
 	aux = st_a->top;
-	up.mov_a = 0;
+	first.mov_a = 0;
 	while (aux)
 	{
 		if (*(int *)aux->content >= range && *(int *)aux->content < range + chunk)
 		{
-			up.n_a = *(int *)aux->content;
+			first.n_a = *(int *)aux->content;
 			break;
 		}
-		up.mov_a++;
+		first.mov_a++;
 		aux = aux->next;
 	}
-	get_mov_b(st_b, &up);
-	if (up.n_a < up.n_b && st_b->top != NULL && st_b->top->next != NULL)
-		up.mov_b++;
-	if (up.mov_a >= up.mov_b)
-		up.mov_tot = up.mov_a;
-	else if (up.mov_a < up.mov_b)
-		up.mov_tot = up.mov_b;
-	return(up);
+	get_mov_b(st_b, &first);
+	if (first.mov_b < 0)
+		first.mov_tot = first.mov_a + (first.mov_b * -1);
+	else
+	{
+		if (first.mov_a >= first.mov_b)
+			first.mov_tot = first.mov_a;
+		else if (first.mov_a < first.mov_b)
+			first.mov_tot = first.mov_b;
+	}
+	return(first);
 }
 
 
-static t_mov	get_moves_down(t_stack *st_a, t_stack *st_b, int range)
+static t_mov	get_moves_last(t_stack *st_a, t_stack *st_b, int range)
 {
 	int		chunk;
 	int		c;
-	t_mov	down;
+	t_mov	last;
 	t_list	*aux;
 
 	chunk = st_a->size / CHUNK;
 	if (chunk < 10)
 		chunk = 10;
 	aux = st_a->top;
-	down.mov_a = 0;
+	last.mov_a = 0;
 	c = 0;
 	while (aux)
 	{
 		if (*(int *)aux->content >= range && *(int *)aux->content < range + chunk)
 		{
-			down.n_a = *(int *)aux->content;
-			down.mov_a = c;
+			last.n_a = *(int *)aux->content;
+			last.mov_a = c;
 		}
 		c++;
 		aux = aux->next;
 	}
 	if (st_b->size < st_a->size - 1)
-		down.mov_a = st_a->size - st_b->size - down.mov_a;
-	get_mov_b(st_b, &down);
-	if (st_b->size > 1)
+		last.mov_a = st_a->size - st_b->size - last.mov_a;
+	get_mov_b(st_b, &last);
+	last.mov_a *= -1;
+	if (last.mov_b > 0)
+		last.mov_tot = (last.mov_a - last.mov_b) * -1;
+	else
 	{
-		down.mov_b = st_b->size - down.mov_b;
-		if (down.n_a < down.n_b)
-			down.mov_b--;
+		if (last.mov_a <= last.mov_b)
+			last.mov_tot = last.mov_a * -1;
+		else if (last.mov_a > last.mov_b)
+			last.mov_tot = last.mov_b * -1;
 	}
-	if (down.mov_a >= down.mov_b)
-		down.mov_tot = down.mov_a;
-	else if (down.mov_a < down.mov_b)
-		down.mov_tot = down.mov_b;
-	return(down);
+	return(last);
 }
 
 static void	get_mov_b(t_stack *st_b, t_mov *mov)
@@ -130,15 +129,34 @@ static void	get_mov_b(t_stack *st_b, t_mov *mov)
 			if (*(int *)aux->content == mov->n_a - c)
 			{
 				mov->n_b = *(int *)aux->content;
-				return ;
+				return (up_or_down(st_b->size, mov));
 			}
 			else if (*(int *)aux->content == mov->n_a + c)
 			{
 				mov->n_b = *(int *)aux->content;
-				return ;
+				return (up_or_down(st_b->size, mov));
 			}
 			aux = aux->next;
 			mov->mov_b++;
 		}
 	}
+}
+
+static void	up_or_down(int size, t_mov *mov)
+{
+	int	up;
+	int	down;
+
+	up = 0;
+	down = 0;
+	if (mov->n_a < mov->n_b)
+	{
+		up = 1;
+		down = 1;
+	}
+	if (size / 2 >= mov->mov_b + up)
+		mov->mov_b += up;
+	else
+		mov->mov_b = (size - mov->mov_b - down) * -1;
+	return ;
 }
